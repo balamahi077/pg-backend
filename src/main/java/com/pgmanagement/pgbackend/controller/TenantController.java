@@ -56,4 +56,10 @@ public class TenantController {
     public Tenant vacateTenant(@PathVariable Long id, @RequestParam java.time.LocalDate vacateDate) {
         return tenantService.vacateTenant(id, vacateDate);
     }
+    
+ // Caretaker clicks "Cancel Notice"
+    @PutMapping("/{id}/cancel-notice")
+    public Tenant cancelNotice(@PathVariable Long id) {
+        return tenantService.cancelNotice(id);
+    }
 }

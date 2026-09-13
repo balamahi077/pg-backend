@@ -53,4 +53,11 @@ public class TenantService {
         return tenantRepository.save(tenant);
     }
     
+ // Cancel a notice and make tenant active again
+    public Tenant cancelNotice(Long tenantId) {
+        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new RuntimeException("Tenant not found"));
+        tenant.setStatus("ACTIVE");
+        tenant.setNoticeDate(null); // Clear the date
+        return tenantRepository.save(tenant);
+    }
 }

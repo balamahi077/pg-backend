@@ -25,4 +25,17 @@ public class RoomController {
     public List<Room> getAllRooms() {
         return roomService.getAllRooms();
     }
+    
+    @Autowired
+    private com.pgmanagement.pgbackend.repository.RoomRepository roomRepository; // Quick autowire for the new repository methods
+
+    @GetMapping("/block/{blockName}")
+    public List<Room> getRoomsByBlock(@PathVariable String blockName) {
+        return roomRepository.findByBlockName(blockName);
+    }
+
+    @GetMapping("/block/{blockName}/floor/{floorNumber}")
+    public List<Room> getRoomsByFloor(@PathVariable String blockName, @PathVariable int floorNumber) {
+        return roomRepository.findByBlockNameAndFloorNumber(blockName, floorNumber);
+    }
 }

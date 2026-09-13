@@ -20,6 +20,13 @@ public class Tenant {
     
     // This links the Tenant to a specific Room
     private Long roomId;
+    
+ // Tenant Lifecycle Management
+    private String status = "ACTIVE"; // "ACTIVE", "ON_NOTICE", "VACATED"
+    private LocalDate noticeDate; // The day they informed you
+    private LocalDate vacateDate; // The exact day they left
+    
+    
 
 	public Long getId() {
 		return id;
@@ -68,6 +75,32 @@ public class Tenant {
 	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public LocalDate getNoticeDate() {
+		return noticeDate;
+	}
+
+	public void setNoticeDate(LocalDate noticeDate) {
+		this.noticeDate = noticeDate;
+	}
+
+	public LocalDate getVacateDate() {
+		return vacateDate;
+	}
+
+	public void setVacateDate(LocalDate vacateDate) {
+		this.vacateDate = vacateDate;
+	}
+	
+	
 
     // Leave space here for Getters and Setters
     

@@ -26,4 +26,31 @@ public class TenantService {
     public List<Tenant> getTenantsByRoomId(Long roomId) {
         return tenantRepository.findByRoomId(roomId);
     }
+    
+ // Fetch only active tenants (hides vacated ones from the main dashboard)
+    public List<Tenant> getActiveTenants() {
+        return tenantRepository.findByStatus("ACTIVE");
+    }
+
+    // Fetch tenants who are currently on notice
+    public List<Tenant> getTenantsOnNotice() {
+        return tenantRepository.findByStatus("ON_NOTICE");
+    }
+
+    // Process a notice period request
+    public Tenant putOnNotice(Long tenantId, java.time.LocalDate noticeDate) {
+        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new RuntimeException("Tenant not found"));
+        tenant.setStatus("ON_NOTICE");
+        tenant.setNoticeDate(noticeDate);
+        return tenantRepository.save(tenant);
+    }
+
+    // Process a vacate request (frees up the room)
+    public Tenant vacateTenant(Long tenantId, java.time.LocalDate vacateDate) {
+        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(() -> new RuntimeException("Tenant not found"));
+        tenant.setStatus("VACATED");
+        tenant.setVacateDate(vacateDate);
+        return tenantRepository.save(tenant);
+    }
+    
 }

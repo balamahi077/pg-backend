@@ -31,4 +31,29 @@ public class TenantController {
     public List<Tenant> getTenantsByRoom(@PathVariable Long roomId) {
         return tenantService.getTenantsByRoomId(roomId);
     }
+    
+    
+ // Get only active tenants
+    @GetMapping("/active")
+    public List<Tenant> getActiveTenants() {
+        return tenantService.getActiveTenants();
+    }
+
+    // Get tenants on notice
+    @GetMapping("/notice")
+    public List<Tenant> getTenantsOnNotice() {
+        return tenantService.getTenantsOnNotice();
+    }
+
+    // Caretaker clicks "Put on Notice"
+    @PutMapping("/{id}/notice")
+    public Tenant putOnNotice(@PathVariable Long id, @RequestParam java.time.LocalDate noticeDate) {
+        return tenantService.putOnNotice(id, noticeDate);
+    }
+
+    // Caretaker clicks "Vacate"
+    @PutMapping("/{id}/vacate")
+    public Tenant vacateTenant(@PathVariable Long id, @RequestParam java.time.LocalDate vacateDate) {
+        return tenantService.vacateTenant(id, vacateDate);
+    }
 }

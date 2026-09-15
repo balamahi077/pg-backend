@@ -38,4 +38,28 @@ public class RoomController {
     public List<Room> getRoomsByFloor(@PathVariable String blockName, @PathVariable int floorNumber) {
         return roomRepository.findByBlockNameAndFloorNumber(blockName, floorNumber);
     }
+    
+ // UPDATE an existing room
+    @PutMapping("/{id}")
+    public Room updateRoom(@PathVariable Long id, @RequestBody Room updatedRoom) {
+        Room room = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Room not found"));
+        room.setBlockName(updatedRoom.getBlockName());
+        room.setFloorNumber(updatedRoom.getFloorNumber());
+        room.setRoomNumber(updatedRoom.getRoomNumber());
+        room.setSharingType(updatedRoom.getSharingType());
+        room.setTotalBeds(updatedRoom.getTotalBeds());
+        room.setMonthlyRent(updatedRoom.getMonthlyRent());
+        return roomRepository.save(room);
+    }
+
+    // DELETE a room
+    @DeleteMapping("/{id}")
+    public org.springframework.http.ResponseEntity<?> deleteRoom(@PathVariable Long id) {
+        try {
+            roomRepository.deleteById(id);
+            return org.springframework.http.ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return org.springframework.http.ResponseEntity.badRequest().body("Cannot delete room. Ensure no tenants are assigned to it.");
+        }
+    }
 }
